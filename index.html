@@ -51,8 +51,8 @@
                         <div class="stat-label">Verified Instances</div>
                     </div>
                     <div class="stat-item glass">
-                        <div class="stat-value" id="live-member-count">—</div>
-                        <div class="stat-label">Group Members</div>
+                        <div class="stat-value">8K+</div>
+                        <div class="stat-label">Group Joins</div>
                     </div>
                     <div class="stat-item glass">
                         <div class="stat-value">RAIN.3359</div>
@@ -137,7 +137,7 @@
                 <h2 class="section-title">COMMUNITY HUB</h2>
                 <p style="color: var(--text-dim);">Resources for our verified members & players.</p>
             </div>
-            <div class="portal-grid" style="display: flex; justify-content: center;">
+            <div class="portal-grid" style="display: none; justify-content: center;">
                 <a href="appeal.html" class="glass portal-item"
                     style="max-width: 400px; padding: 2rem; display: flex; align-items: center; gap: 1.5rem; text-decoration: none;">
                     <div class="portal-icon" style="background: rgba(0, 242, 255, 0.05);">
@@ -279,30 +279,6 @@
                 }
             })
             .catch(err => console.error("Error loading dynamic content:", err));
-
-        // Live VRChat group member count
-        fetch('vrc_group_count.php')
-            .then(res => res.json())
-            .then(data => {
-                if (data.count) {
-                    const el = document.getElementById('live-member-count');
-                    const target = data.count;
-                    const duration = 2000;
-                    const start = performance.now();
-                    const format = (n) => n >= 1000 ? (n / 1000).toFixed(1) + 'K+' : n.toString();
-                    function step(now) {
-                        const progress = Math.min((now - start) / duration, 1);
-                        const eased = 1 - Math.pow(1 - progress, 3);
-                        el.innerText = format(Math.floor(eased * target));
-                        if (progress < 1) requestAnimationFrame(step);
-                        else el.innerText = format(target);
-                    }
-                    requestAnimationFrame(step);
-                }
-            })
-            .catch(() => {
-                document.getElementById('live-member-count').innerText = '7.4K+';
-            });
     </script>
 </body>
 
