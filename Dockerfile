@@ -1,7 +1,6 @@
 FROM php:8.2-apache
 
 # Fix MPM conflict: delete ALL MPM symlinks and re-enable only prefork
-# This is more reliable than a2dismod because it works regardless of base image state
 RUN rm -f /etc/apache2/mods-enabled/mpm_*.conf \
     /etc/apache2/mods-enabled/mpm_*.load && \
     ln -s /etc/apache2/mods-available/mpm_prefork.conf /etc/apache2/mods-enabled/mpm_prefork.conf && \
@@ -16,10 +15,10 @@ RUN mkdir -p /var/www/html/data && \
     chown -R www-data:www-data /var/www/html/data && \
     chmod -R 775 /var/www/html/data
 
-# Make entrypoint executable
-RUN chmod +x /var/www/html/docker-entrypoint.sh
-
 EXPOSE 8080
 
-ENTRYPOINT ["/var/www/html/docker-entrypoint.sh"]
-CMD ["apache2-foreground"]
+# Inline the port patching into CMD so we avoid any CRLF shell script issues
+# Double quotes ensure $PORT is properly expanded at runtime
+CMD sed -i "s/Listen 80/Listen ${PORT:-8080}/" /etc/apache2/ports.conf && \
+    sed -i "s/:80>/:${PORT:-8080}>/" /etc/apache2/sites-available/000-default.conf && \
+    apache2-foreground
