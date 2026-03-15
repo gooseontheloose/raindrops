@@ -9,6 +9,7 @@
         content="A game & chill community for all. Join our VRChat club, karaoke nights, and exclusive events. Experience the best gaming community in VR.">
     <link rel="stylesheet" href="index.css">
     <link rel="icon" href="assets/logo_icon.png" type="image/png">
+    <script src="https://player.twitch.tv/js/embed/v1.js"></script>
 </head>
 
 <body>
@@ -74,14 +75,8 @@
                 <p style="color: var(--text-dim); max-width: 800px; margin: 0 auto;">The heart of our community. Watch the live streams, sets, and sessions right here.</p>
             </div>
             <div class="glass" style="width: 100%; max-width: 1050px; overflow: hidden; aspect-ratio: 16/9; border: 1px solid var(--glass-border); box-shadow: 0 0 50px rgba(0, 242, 255, 0.15); position: relative;">
-                <!-- Twitch Embed Iframe -->
-                <iframe
-                    src="https://player.twitch.tv/?channel=rainingvt&parent=raindrops-production.up.railway.app&parent=localhost"
-                    height="100%"
-                    width="100%"
-                    style="border: none;"
-                    allowfullscreen>
-                </iframe>
+                <!-- Twitch Embed Container -->
+                <div id="twitch-player" style="width: 100%; height: 100%;"></div>
             </div>
         </section>
 
@@ -294,6 +289,20 @@
 
     <script src="index.js"></script>
     <script>
+        // Initialize Twitch Player
+        var options = {
+            width: '100%',
+            height: '100%',
+            channel: "rainingvt",
+            parent: ["raindrops-production.up.railway.app", "localhost"],
+            autoplay: true,
+            muted: false // Start unmuted
+        };
+        var player = new Twitch.Player("twitch-player", options);
+        player.addEventListener(Twitch.Player.READY, function() {
+            player.setVolume(0.1); // Set volume to 10%
+        });
+
         // Load live content from backend
         fetch('get_public_content.php')
             .then(res => res.json())
