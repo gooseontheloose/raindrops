@@ -16,5 +16,8 @@ RUN mkdir -p /var/www/html/data && \
     chown -R www-data:www-data /var/www/html/data && \
     chmod -R 777 /var/www/html/data
 
-# Expose port 80
-EXPOSE 80
+# Update Apache configuration to use the PORT environment variable (or 8080 as fallback)
+RUN sed -i 's/80/${PORT:-8080}/g' /etc/apache2/sites-available/000-default.conf /etc/apache2/ports.conf
+
+# Expose port (metadata)
+EXPOSE 8080
