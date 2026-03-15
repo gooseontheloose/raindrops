@@ -28,63 +28,24 @@ if (!file_exists($SETTINGS_FILE)) {
 }
 
 $settings = json_decode(file_get_contents($SETTINGS_FILE), true);
-$username = $settings['vrc_username'] ?? '';
-$password = $settings['vrc_password'] ?? '';
+$authCookie = $settings['vrc_auth_cookie'] ?? '';
 
-if (empty($username) || empty($password)) {
+if (empty($authCookie)) {
     // Return cached data even if stale, or null
     if (isset($cache['count'])) {
         echo json_encode($cache);
     } else {
-        echo json_encode(['count' => null, 'error' => 'VRChat credentials not configured']);
+        echo json_encode(['count' => null, 'error' => 'VRChat account not linked']);
     }
     exit;
 }
 
-// Step 1: Authenticate to VRChat API
-$authHeader = 'Basic ' . base64_encode($username . ':' . $password);
-
-$ch = curl_init('https://api.vrchat.cloud/api/1/auth/user');
-curl_setopt_array($ch, [
-    CURLOPT_RETURNTRANSFER => true,
-    CURLOPT_HTTPHEADER => [
-        'Authorization: ' . $authHeader,
-        'User-Agent: RaindropsWebsite/1.0 (community site)'
-    ],
-    CURLOPT_HEADER => true,
-    CURLOPT_SSL_VERIFYPEER => true,
-    CURLOPT_TIMEOUT => 10
-]);
-$authResponse = curl_exec($ch);
-$authHttpCode = curl_getinfo($ch, CURLINFO_HTTP_CODE);
-$headerSize = curl_getinfo($ch, CURLINFO_HEADER_SIZE);
-$authHeaders = substr($authResponse, 0, $headerSize);
-curl_close($ch);
-
-if ($authHttpCode !== 200) {
-    // Auth failed — return stale cache or error
-    if (isset($cache['count'])) {
-        echo json_encode($cache);
-    } else {
-        echo json_encode(['count' => null, 'error' => 'VRChat auth failed (HTTP ' . $authHttpCode . ')']);
-    }
-    exit;
-}
-
-// Extract auth cookie from response headers
-$cookies = [];
-preg_match_all('/Set-Cookie:\s*([^;]+)/i', $authHeaders, $cookieMatches);
-foreach ($cookieMatches[1] as $cookie) {
-    $cookies[] = $cookie;
-}
-$cookieString = implode('; ', $cookies);
-
-// Step 2: Get group info
+// Fetch group info using the saved full-session cookie
 $ch = curl_init('https://api.vrchat.cloud/api/1/groups/' . $GROUP_ID);
 curl_setopt_array($ch, [
     CURLOPT_RETURNTRANSFER => true,
     CURLOPT_HTTPHEADER => [
-        'Cookie: ' . $cookieString,
+        'Cookie: ' . $authCookie,
         'User-Agent: RaindropsWebsite/1.0 (community site)'
     ],
     CURLOPT_SSL_VERIFYPEER => true,
@@ -98,7 +59,7 @@ if ($groupHttpCode !== 200) {
     if (isset($cache['count'])) {
         echo json_encode($cache);
     } else {
-        echo json_encode(['count' => null, 'error' => 'Failed to fetch group (HTTP ' . $groupHttpCode . ')']);
+        echo json_encode(['count' => null, 'error' => 'Failed to fetch group or cookie expired (HTTP ' . $groupHttpCode . ')']);
     }
     exit;
 }

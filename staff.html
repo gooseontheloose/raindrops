@@ -405,13 +405,33 @@
                         style="display: block; color: var(--primary); font-size: 0.75rem; font-weight: 800; margin-bottom: 1rem; letter-spacing: 1px;">VRCHAT
                         GROUP API CREDENTIALS</label>
                     <p style="color: var(--text-dim); font-size: 0.8rem; line-height: 1.4; margin-bottom: 1rem;">
-                        Required to fetch live group member counts. Use a dedicated bot account if possible.</p>
+                        Required to fetch live group member counts. Link your account securely (supports 2FA).</p>
 
-                    <input type="text" id="vrcUsernameInput" class="login-input"
-                        style="text-align: left; margin-bottom: 0.5rem;" placeholder="VRChat Username">
+                    <div id="vrcStatusContainer"
+                        style="margin-bottom: 1rem; padding: 1rem; border-radius: 8px; background: rgba(0,0,0,0.2); font-size: 0.85rem;">
+                        Status: <span id="vrcStatusText" style="color: var(--text-dim);">Checking...</span>
+                    </div>
 
-                    <input type="password" id="vrcPasswordInput" class="login-input" style="text-align: left;"
-                        placeholder="VRChat Password">
+                    <div id="vrcLoginSetup">
+                        <input type="text" id="vrcUsernameInput" class="login-input"
+                            style="text-align: left; margin-bottom: 0.5rem;" placeholder="VRChat Username">
+                        <input type="password" id="vrcPasswordInput" class="login-input"
+                            style="text-align: left; margin-bottom: 1rem;" placeholder="VRChat Password">
+                        <button onclick="startVRCLogin()" id="vrcLoginBtn" class="cta-button"
+                            style="width: 100%; background: var(--glass-border);">LINK ACCOUNT</button>
+                    </div>
+
+                    <div id="vrc2FASetup" style="display: none; margin-top: 1rem;">
+                        <label id="vrc2FALabel"
+                            style="display: block; color: var(--primary); font-size: 0.75rem; font-weight: 800; margin-bottom: 0.5rem;">ENTER
+                            2FA CODE</label>
+                        <input type="text" id="vrc2FAInput" class="login-input"
+                            style="text-align: center; font-size: 1.5rem; letter-spacing: 4px; margin-bottom: 1rem;"
+                            placeholder="000000" maxlength="6">
+                        <input type="hidden" id="vrc2FAType">
+                        <button onclick="verifyVRC2FA()" id="vrcVerifyBtn" class="cta-button"
+                            style="width: 100%;">VERIFY CODE</button>
+                    </div>
                 </div>
 
                 <button onclick="saveSettings()" id="saveBtn" class="cta-button" style="width: 100%;">SAVE
@@ -480,9 +500,84 @@
                 .then(res => res.json())
                 .then(data => {
                     document.getElementById('webhookInput').value = data.discord_webhook || '';
-                    document.getElementById('vrcUsernameInput').value = data.vrc_username || '';
-                    document.getElementById('vrcPasswordInput').value = data.vrc_password || '';
+                    const statusText = document.getElementById('vrcStatusText');
+                    if (data.vrc_auth_cookie) {
+                        statusText.innerHTML = '<span style="color: #4ade80;">Linked Successfully</span>';
+                    } else {
+                        statusText.innerHTML = '<span style="color: #f87171;">Not Linked</span>';
+                    }
                 });
+        }
+
+        function startVRCLogin() {
+            const btn = document.getElementById('vrcLoginBtn');
+            const un = document.getElementById('vrcUsernameInput').value;
+            const pw = document.getElementById('vrcPasswordInput').value;
+
+            if (!un || !pw) return alert('Enter username and password first.');
+
+            btn.innerText = 'NEGOTIATING...';
+            btn.disabled = true;
+
+            fetch('vrc_auth_handler.php?action=login', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({ auth: STAFF_CODE, username: un, password: pw })
+            })
+                .then(res => res.json())
+                .then(data => {
+                    if (data.status === 'requires_2fa') {
+                        document.getElementById('vrcLoginSetup').style.display = 'none';
+                        document.getElementById('vrc2FASetup').style.display = 'block';
+                        document.getElementById('vrc2FALabel').innerText = `ENTER ${data.type.toUpperCase()} CODE`;
+                        document.getElementById('vrc2FAType').value = data.type;
+                    } else if (data.status === 'success') {
+                        btn.innerText = 'SUCCESS!';
+                        setTimeout(viewSettings, 1500);
+                    } else {
+                        alert('Login Failed: ' + data.message);
+                        btn.innerText = 'LINK ACCOUNT';
+                        btn.disabled = false;
+                    }
+                })
+                .catch(() => { alert('Network error'); btn.disabled = false; btn.innerText = 'LINK ACCOUNT'; });
+        }
+
+        function verifyVRC2FA() {
+            const btn = document.getElementById('vrcVerifyBtn');
+            const code = document.getElementById('vrc2FAInput').value;
+            const type = document.getElementById('vrc2FAType').value;
+
+            if (!code || code.length !== 6) return alert('Enter the 6-digit code.');
+
+            btn.innerText = 'VERIFYING...';
+            btn.disabled = true;
+
+            fetch('vrc_auth_handler.php?action=verify', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({ auth: STAFF_CODE, code: code, type: type })
+            })
+                .then(res => res.json())
+                .then(data => {
+                    if (data.status === 'success') {
+                        btn.innerText = 'SUCCESS!';
+                        setTimeout(() => {
+                            document.getElementById('vrc2FASetup').style.display = 'none';
+                            document.getElementById('vrcLoginSetup').style.display = 'block';
+                            document.getElementById('vrcUsernameInput').value = '';
+                            document.getElementById('vrcPasswordInput').value = '';
+                            btn.innerText = 'VERIFY CODE';
+                            btn.disabled = false;
+                            viewSettings();
+                        }, 1500);
+                    } else {
+                        alert('Failed: ' + data.message);
+                        btn.innerText = 'VERIFY CODE';
+                        btn.disabled = false;
+                    }
+                })
+                .catch(() => { alert('Network error'); btn.disabled = false; btn.innerText = 'VERIFY CODE'; });
         }
 
         function viewCMS() {
@@ -565,8 +660,8 @@
                 .then(res => res.json())
                 .then(existingSettings => {
                     existingSettings.discord_webhook = document.getElementById('webhookInput').value;
-                    existingSettings.vrc_username = document.getElementById('vrcUsernameInput').value;
-                    existingSettings.vrc_password = document.getElementById('vrcPasswordInput').value;
+                    // VRC credentials are now handled entirely by the vrc_auth_handler logic.
+                    // We just save the webhook here.
 
                     fetch('update_settings.php', {
                         method: 'POST',
