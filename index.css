@@ -187,7 +187,7 @@ nav.scrolled {
 
 /* Layout */
 .container {
-    max-width: 1200px;
+    max-width: 1400px;
     margin: 0 auto;
     padding: 0 2rem;
 }
@@ -198,6 +198,7 @@ section {
     display: flex;
     flex-direction: column;
     justify-content: center;
+    align-items: center;
 }
 
 /* Hero Section */
@@ -338,7 +339,7 @@ section {
     flex-wrap: wrap;
     justify-content: center;
     gap: 1.5rem;
-    max-width: 1000px;
+    max-width: 1200px;
     margin: 0 auto;
 }
 
