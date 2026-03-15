@@ -399,6 +399,21 @@
                     <p style="color: var(--text-dim); font-size: 0.8rem; line-height: 1.4;">Notifications for ban
                         appeals and group activity will be sent to this webhook channel.</p>
                 </div>
+
+                <div style="margin-bottom: 2rem; padding-top: 1.5rem; border-top: 1px solid rgba(255,255,255,0.1);">
+                    <label
+                        style="display: block; color: var(--primary); font-size: 0.75rem; font-weight: 800; margin-bottom: 1rem; letter-spacing: 1px;">VRCHAT
+                        GROUP API CREDENTIALS</label>
+                    <p style="color: var(--text-dim); font-size: 0.8rem; line-height: 1.4; margin-bottom: 1rem;">
+                        Required to fetch live group member counts. Use a dedicated bot account if possible.</p>
+
+                    <input type="text" id="vrcUsernameInput" class="login-input"
+                        style="text-align: left; margin-bottom: 0.5rem;" placeholder="VRChat Username">
+
+                    <input type="password" id="vrcPasswordInput" class="login-input" style="text-align: left;"
+                        placeholder="VRChat Password">
+                </div>
+
                 <button onclick="saveSettings()" id="saveBtn" class="cta-button" style="width: 100%;">SAVE
                     SETTINGS</button>
             </div>
@@ -465,6 +480,8 @@
                 .then(res => res.json())
                 .then(data => {
                     document.getElementById('webhookInput').value = data.discord_webhook || '';
+                    document.getElementById('vrcUsernameInput').value = data.vrc_username || '';
+                    document.getElementById('vrcPasswordInput').value = data.vrc_password || '';
                 });
         }
 
@@ -548,6 +565,8 @@
                 .then(res => res.json())
                 .then(existingSettings => {
                     existingSettings.discord_webhook = document.getElementById('webhookInput').value;
+                    existingSettings.vrc_username = document.getElementById('vrcUsernameInput').value;
+                    existingSettings.vrc_password = document.getElementById('vrcPasswordInput').value;
 
                     fetch('update_settings.php', {
                         method: 'POST',
