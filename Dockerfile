@@ -1,8 +1,11 @@
 # Use the official PHP image with Apache
 FROM php:8.2-apache
 
-# Enable Apache rewrite module
-RUN a2enmod rewrite
+# Enable Apache rewrite module and configure MPM
+RUN a2dismod mpm_event && \
+    a2dismod mpm_worker && \
+    a2enmod mpm_prefork && \
+    a2enmod rewrite
 
 # Copy all website files into the container's web directory
 COPY . /var/www/html/
