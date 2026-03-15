@@ -1,0 +1,203 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>RAINDROPS | Ban Appeal</title>
+    <link rel="stylesheet" href="index.css">
+    <style>
+        .appeal-container {
+            padding-top: 120px;
+            min-height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            padding-bottom: 50px;
+        }
+
+        .appeal-form {
+            width: 100%;
+            max-width: 600px;
+            padding: 3rem;
+        }
+
+        .form-group {
+            margin-bottom: 1.5rem;
+        }
+
+        .form-group label {
+            display: block;
+            margin-bottom: 0.5rem;
+            color: var(--primary);
+            font-size: 0.8rem;
+            font-weight: 700;
+            letter-spacing: 1px;
+            text-transform: uppercase;
+        }
+
+        .form-group input,
+        .form-group textarea {
+            width: 100%;
+            background: rgba(255, 255, 255, 0.05);
+            border: 1px solid var(--glass-border);
+            border-radius: 8px;
+            padding: 1rem;
+            color: var(--text-main);
+            font-family: 'Plus Jakarta Sans', sans-serif;
+            transition: all 0.3s ease;
+        }
+
+        .form-group input:focus,
+        .form-group textarea:focus {
+            outline: none;
+            border-color: var(--primary);
+            background: rgba(255, 255, 255, 0.1);
+            box-shadow: 0 0 15px rgba(0, 191, 191, 0.2);
+        }
+
+        .submit-btn {
+            width: 100%;
+            margin-top: 1rem;
+        }
+
+        .success-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.9);
+            display: none;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            z-index: 1000;
+            backdrop-filter: blur(10px);
+        }
+
+        .ticket-number {
+            font-family: var(--font-head);
+            font-size: 2rem;
+            color: var(--primary);
+            margin: 1rem 0;
+            text-shadow: 0 0 20px var(--primary-glow);
+        }
+    </style>
+</head>
+
+<body class="scanlines">
+    <canvas id="rainCanvas"></canvas>
+
+    <nav id="navbar">
+        <a href="index.html" class="logo">
+            <img src="assets/raindrops no cloud.png" alt="RAINDROPS" style="height: 32px; display: block;">
+        </a>
+        <div class="nav-actions">
+            <a href="index.html" class="nav-link-small">Back to Home</a>
+        </div>
+    </nav>
+
+    <div class="appeal-container container">
+        <div class="glass appeal-form fade-in">
+            <h2 class="section-title" style="margin-bottom: 0.5rem;">BAN APPEAL</h2>
+            <p style="text-align: center; color: var(--text-dim); margin-bottom: 2.5rem; font-size: 0.9rem;">
+                Please provide accurate information to expedite your appeal process.
+            </p>
+
+            <form id="appealForm">
+                <div class="form-group">
+                    <label>VRChat Account URL</label>
+                    <input type="url" id="vrc_url" placeholder="https://vrchat.com/home/user/usr_..." required>
+                </div>
+
+                <div class="form-group">
+                    <label>Discord Username</label>
+                    <input type="text" id="discord_name" placeholder="Username#0000 or username" required>
+                </div>
+
+                <div class="form-group">
+                    <label>Reason for Ban (If known)</label>
+                    <input type="text" id="ban_reason" placeholder="e.g. Toxicity, Rule 1 violation" required>
+                </div>
+
+                <div class="form-group">
+                    <label>Why should you be unbanned?</label>
+                    <textarea id="appeal_message" rows="5"
+                        placeholder="Explain the situation and why you'd like to return..." required></textarea>
+                </div>
+
+                <button type="submit" class="cta-button submit-btn">SUBMIT APPEAL</button>
+            </form>
+        </div>
+    </div>
+
+    <!-- Success Modal -->
+    <div id="successModal" class="success-overlay">
+        <div class="glass" style="padding: 3rem; text-align: center; max-width: 500px; border-radius: 20px;">
+            <svg style="width: 64px; height: 64px; color: var(--primary); margin-bottom: 1.5rem;" fill="none"
+                stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                    d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"></path>
+            </svg>
+            <h2 class="section-title" style="margin-bottom: 1rem;">APPEAL SUBMITTED</h2>
+            <p style="color: var(--text-dim);">Your appeal has been received. Please save your ticket number for
+                reference:</p>
+            <div id="ticketDisplay" class="ticket-number">#RN-0000</div>
+            <p style="color: var(--text-dim); font-size: 0.8rem; margin-top: 2rem;">Our staff will review your case.
+                Check your Discord DM for updates.</p>
+            <a href="index.html" class="cta-button" style="margin-top: 2rem; padding: 0.8rem 2rem;">RETURN HOME</a>
+        </div>
+    </div>
+
+    <script src="index.js"></script>
+    <script>
+        document.getElementById('appealForm').addEventListener('submit', function (e) {
+            e.preventDefault();
+
+            const btn = e.target.querySelector('button');
+            const originalText = btn.innerText;
+            btn.innerText = 'PROCESSING...';
+            btn.disabled = true;
+
+            // Generate ticket ID
+            const ticketId = 'RN-' + Math.random().toString(36).substr(2, 6).toUpperCase();
+
+            // Collect data
+            const formData = {
+                ticket: ticketId,
+                vrc: document.getElementById('vrc_url').value,
+                discord: document.getElementById('discord_name').value,
+                reason: document.getElementById('ban_reason').value,
+                message: document.getElementById('appeal_message').value
+            };
+
+            // Send to PHP Backend
+            fetch('submit_appeal.php', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify(formData)
+            })
+                .then(response => response.json())
+                .then(data => {
+                    if (data.status === 'success') {
+                        // Show success modal
+                        document.getElementById('ticketDisplay').innerText = "#" + ticketId;
+                        document.getElementById('successModal').style.display = 'flex';
+                    } else {
+                        alert('Error: ' + (data.error || 'Submission failed'));
+                    }
+                })
+                .catch(err => {
+                    console.error("Submission error:", err);
+                    alert('Connection error. Please try again later.');
+                })
+                .finally(() => {
+                    btn.innerText = originalText;
+                    btn.disabled = false;
+                });
+        });
+    </script>
+</body>
+
+</html>

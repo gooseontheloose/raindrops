@@ -1,0 +1,285 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>RAINDROPS | The Ultimate VRChat Gaming Community</title>
+    <meta name="description"
+        content="A game & chill community for all. Join our VRChat club, karaoke nights, and exclusive events. Experience the best gaming community in VR.">
+    <link rel="stylesheet" href="index.css">
+    <link rel="icon" href="favicon.ico" type="image/x-icon">
+</head>
+
+<body>
+    <div id="canvas-container">
+        <canvas id="canvas-club"></canvas>
+    </div>
+
+    <nav id="navbar">
+        <a href="#" class="logo">
+            <img src="assets/raindrops no cloud.png" alt="RAINDROPS" style="height: 32px; display: block;">
+        </a>
+        <ul class="nav-links">
+            <li><a href="#about">About</a></li>
+            <li><a href="#events">Schedule</a></li>
+            <li><a href="appeal.html">Ban Appeal</a></li>
+            <li><a href="#rules">Rules</a></li>
+        </ul>
+        <div class="nav-actions">
+            <a href="staff.html" class="nav-link-small">Staff Login</a>
+            <a href="https://discord.gg/raindrop" target="_blank" class="cta-button"
+                style="padding: 0.5rem 1.5rem; font-size: 0.75rem;">JOIN DISCORD</a>
+        </div>
+    </nav>
+
+    <main class="container">
+        <section id="hero">
+            <div class="hero-content fade-in">
+                <img src="assets/raindrops full logo.png" alt="RAINDROPS"
+                    style="width: 100%; max-width: 800px; height: auto; margin-bottom: 1rem;">
+                <span id="hero-tag" class="event-tag"
+                    style="margin-bottom: 2.5rem; display: block; color: var(--primary); letter-spacing: 4px;">WELCOME
+                    TO THE CLUB</span>
+                <p id="hero-desc">A game & chill community for all. VRChat based, but all gamers welcome. Join us for
+                    bars, clubs,
+                    move/game nights, and unique experiences.</p>
+
+                <div class="stats-grid">
+                    <div class="stat-item glass">
+                        <div class="stat-value">479</div>
+                        <div class="stat-label">Verified Members</div>
+                    </div>
+                    <div class="stat-item glass">
+                        <div class="stat-value">7.4K+</div>
+                        <div class="stat-label">Group Joins</div>
+                    </div>
+                    <div class="stat-item glass">
+                        <div class="stat-value">RAIN.3359</div>
+                        <div class="stat-label">Group Code</div>
+                    </div>
+                </div>
+
+                <div style="margin-top: 4rem;">
+                    <a href="#events" class="cta-button">VIEW SCHEDULE</a>
+                </div>
+            </div>
+        </section>
+
+        <section id="about">
+            <div class="glass glass-card"
+                style="max-width: 900px; margin: 0 auto; text-align: center; position: relative; overflow: hidden;">
+                <img src="assets/just rain cloud.png" alt="Cloud Icon"
+                    style="width: 100px; height: auto; margin-bottom: 2rem; opacity: 0.9; filter: drop-shadow(0 0 15px var(--primary-glow));">
+                <h2 class="section-title" style="margin-bottom: 2rem;">ABOUT THE COMMUNITY</h2>
+                <div
+                    style="display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap: 2rem; text-align: left; margin-bottom: 3rem;">
+                    <div>
+                        <h3 id="about-mission-title" style="color: var(--primary); margin-bottom: 1rem;">OUR MISSION
+                        </h3>
+                        <p id="about-mission-desc" style="color: var(--text-dim); line-height: 1.6;">Raindrops is more
+                            than just a VRChat group;
+                            it's a sanctuary for gamers and social butterflies alike. We aim to create high-quality,
+                            atmospheric events that bring people together.</p>
+                    </div>
+                    <div>
+                        <h3 id="about-what-title" style="color: var(--primary); margin-bottom: 1rem;">WHAT WE DO</h3>
+                        <p id="about-what-desc" style="color: var(--text-dim); line-height: 1.6;">From weekly karaoke
+                            showdowns to
+                            late-night clubbing and cozy movie nights, we host a variety of events designed to foster
+                            friendships and unforgettable memories.</p>
+                    </div>
+                </div>
+                <div style="display: flex; gap: 1rem; justify-content: center; flex-wrap: wrap;">
+                    <a href="https://discord.gg/raindrop" class="cta-button">JOIN DISCORD</a>
+                    <a href="https://vrchat.com/home/group/grp_d49c108b-dcf4-49b5-8efa-5cfce12f6c9c" target="_blank"
+                        class="cta-button" style="border-color: var(--secondary); color: var(--secondary);">VRC
+                        GROUP</a>
+                </div>
+            </div>
+        </section>
+
+        <section id="events">
+            <h2 class="section-title">WEEKLY SCHEDULE</h2>
+            <div class="events-grid"
+                style="display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 1.5rem; max-width: 1000px; margin: 0 auto;">
+                <div class="event-card glass" style="padding: 2rem; text-align: center;">
+                    <span id="event1-tag" class="event-tag"
+                        style="color: var(--primary); font-size: 0.7rem; font-weight: 800; letter-spacing: 2px;">MONDAY
+                        • 8PM EST</span>
+                    <h3 id="event1_title" style="margin: 1rem 0;">KARAOKE NIGHT</h3>
+                    <p id="event1-desc" style="color: var(--text-dim); font-size: 0.9rem;">Show off your talent or cheer
+                        on friends at
+                        our custom karaoke lounge.</p>
+                </div>
+                <div class="event-card glass" style="padding: 2rem; text-align: center;">
+                    <span id="event2-tag" class="event-tag"
+                        style="color: var(--primary); font-size: 0.7rem; font-weight: 800; letter-spacing: 2px;">FRIDAY
+                        • 10PM EST</span>
+                    <h3 id="event2_title" style="margin: 1rem 0;">B-CLUB SESSIONS</h3>
+                    <p id="event2-desc" style="color: var(--text-dim); font-size: 0.9rem;">The premier Raindrops
+                        nightlife experience
+                        with live DJs and visuals.</p>
+                </div>
+                <div class="event-card glass" style="padding: 2rem; text-align: center;">
+                    <span id="event3-tag" class="event-tag"
+                        style="color: var(--primary); font-size: 0.7rem; font-weight: 800; letter-spacing: 2px;">WEEKENDS</span>
+                    <h3 id="event3_title" style="margin: 1rem 0;">SPECIAL THEMES</h3>
+                    <p id="event3-desc" style="color: var(--text-dim); font-size: 0.9rem;">Themed parties, movie
+                        marathons, and
+                        community-driven events.</p>
+                </div>
+            </div>
+        </section>
+
+        <section id="portal">
+            <div style="text-align: center; margin-bottom: 3rem;">
+                <h2 class="section-title">COMMUNITY HUB</h2>
+                <p style="color: var(--text-dim);">Resources for our verified members & players.</p>
+            </div>
+            <div class="portal-grid" style="display: flex; justify-content: center;">
+                <a href="appeal.html" class="glass portal-item"
+                    style="max-width: 400px; padding: 2rem; display: flex; align-items: center; gap: 1.5rem; text-decoration: none;">
+                    <div class="portal-icon" style="background: rgba(0, 242, 255, 0.05);">
+                        <svg style="width: 32px; height: 32px; color: var(--primary);"
+                            xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z" />
+                        </svg>
+                    </div>
+                    <div>
+                        <h3 style="color: var(--text-main); font-size: 1.1rem;">BAN APPEAL</h3>
+                        <p style="color: var(--text-dim); font-size: 0.85rem; margin-top: 0.4rem;">Submit a formal
+                            review for account sanctions.</p>
+                    </div>
+                </a>
+            </div>
+        </section>
+
+        <section id="rules">
+            <h2 class="section-title">RAIN RULES</h2>
+            <div class="rules-grid">
+                <div class="glass glass-card">
+                    <div style="display: flex; align-items: center; gap: 1rem; margin-bottom: 1.5rem;">
+                        <svg style="width: 24px; color: var(--primary);" xmlns="http://www.w3.org/2000/svg" fill="none"
+                            viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor">
+                            <path stroke-linecap="round" stroke-linejoin="round"
+                                d="M9 12.75L11.25 15 15 9.75M21 12c0 1.268-.63 2.39-1.593 3.068a3.745 3.745 0 01-1.043 3.296 3.745 3.745 0 01-3.296 1.043A3.745 3.745 0 0112 21a3.745 3.745 0 01-3.068-1.593 3.746 3.746 0 01-3.296-1.043 3.745 3.745 0 01-1.043-3.296A3.745 3.745 0 013 12c0-1.268.63-2.39 1.593-3.068a3.745 3.745 0 011.043-3.296 3.746 3.746 0 013.296-1.043A3.746 3.746 0 0112 3c1.268 0 2.39.63 3.068 1.593a3.746 3.746 0 013.296 1.043 3.746 3.746 0 011.043 3.296A3.745 3.745 0 0121 12z" />
+                        </svg>
+                        <h3 id="rules-group1-title" style="font-size: 1.1rem; letter-spacing: 1px;">INSTANCES</h3>
+                    </div>
+                    <ul id="rules-group1-list" class="rules-list">
+                        <li>Verified instances: Clothing optional</li>
+                        <li>Normal instances are strictly SFW</li>
+                        <li>Common sense and consent are mandatory</li>
+                        <li>No threats, doxing, or crasher avatars</li>
+                        <li>Drop portals outside the instance</li>
+                    </ul>
+                </div>
+                <div class="glass glass-card">
+                    <div style="display: flex; align-items: center; gap: 1rem; margin-bottom: 1.5rem;">
+                        <svg style="width: 24px; color: var(--secondary);" xmlns="http://www.w3.org/2000/svg"
+                            fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor">
+                            <path stroke-linecap="round" stroke-linejoin="round"
+                                d="M18 18.72a9.094 9.094 0 003.741-.479 3 3 0 00-4.682-2.72m.94 3.198l.001.031c0 .225-.012.447-.037.666A11.944 11.944 0 0112 21c-2.17 0-4.207-.576-5.963-1.584A6.062 6.062 0 016 18.719m12 0a5.971 5.971 0 00-.941-3.197m0 0A5.995 5.995 0 0012 12.75a5.995 5.995 0 00-5.058 2.772m0 0a3 3 0 00-4.681 2.72 8.986 8.986 0 003.74.477m.94-3.197a5.971 5.971 0 00-.94 3.197M15 6.75a3 3 0 11-6 0 3 3 0 016 0zm6 3a2.25 2.25 0 11-4.5 0 2.25 2.25 0 014.5 0zm-13.5 0a2.25 2.25 0 11-4.5 0 2.25 2.25 0 014.5 0z" />
+                        </svg>
+                        <h3 id="rules-group2-title" style="font-size: 1.1rem; letter-spacing: 1px;">COMMUNITY</h3>
+                    </div>
+                    <ul id="rules-group2-list" class="rules-list">
+                        <li>Be yourself—if you're chill, we're chill</li>
+                        <li>No drama, bad vibes, or rumor spreading</li>
+                        <li>Zero tolerance for ads or promotions</li>
+                        <li>Don't be a troll, just have a good time</li>
+                        <li>Keep your two cents; nobody asked</li>
+                    </ul>
+                </div>
+            </div>
+        </section>
+
+        <section id="staff">
+            <h2 class="section-title">ADMINISTRATION</h2>
+            <div class="glass glass-card"
+                style="max-width: 600px; margin: 0 auto; border-left: 4px solid var(--primary); text-align: center;">
+                <div style="display: flex; flex-direction: column; gap: 1.5rem; align-items: center;">
+                    <div class="portal-icon" style="margin-bottom: 0.5rem; background: rgba(0,242,255,0.05);">
+                        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5"
+                            stroke="currentColor">
+                            <path stroke-linecap="round" stroke-linejoin="round"
+                                d="M16.5 10.5V6.75a4.5 4.5 0 10-9 0v3.75m-.75 11.25h10.5a2.25 2.25 0 002.25-2.25v-6.75a2.25 2.25 0 00-2.25-2.25H6.75a2.25 2.25 0 00-2.25 2.25v6.75a2.25 2.25 0 002.25 2.25z" />
+                        </svg>
+                    </div>
+                    <div>
+                        <h3 style="color: var(--primary); letter-spacing: 2px; font-weight: 700;">STAFF LOGIN</h3>
+                        <p style="color: var(--text-dim); margin-top: 0.5rem; font-size: 0.9rem;">Secure access for
+                            moderators and community leads.</p>
+                    </div>
+                    <div style="display: flex; gap: 1rem; flex-wrap: wrap; justify-content: center;">
+                        <a href="staff.html" class="cta-button" style="padding: 0.6rem 2rem;">AUTHENTICATE</a>
+                        <a href="https://discord.gg/raindrop" class="cta-button"
+                            style="padding: 0.6rem 2rem; border-color: var(--text-dim); color: var(--text-dim);">NEED
+                            HELP?</a>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <footer
+            style="padding: 4rem 0; text-align: center; color: var(--text-dim); border-top: 1px solid var(--glass-border);">
+            <div style="margin-bottom: 2rem;">
+                <a href="#" class="logo" style="font-size: 1.2rem; opacity: 0.5;">RAINDROPS</a>
+            </div>
+            <p style="font-size: 0.85rem;">&copy; 2026 RAINDROPS COMMUNITY. NOT AFFILIATED WITH VRCHAT INC.</p>
+            <div style="margin-top: 1.5rem; display: flex; justify-content: center; gap: 2rem;">
+                <a href="https://paypal.me/rainingvt"
+                    style="color: var(--primary); text-decoration: none; font-size: 0.8rem; letter-spacing: 1px;">PAYPAL</a>
+                <a href="https://cash.app/$rainingvt"
+                    style="color: var(--primary); text-decoration: none; font-size: 0.8rem; letter-spacing: 1px;">CASHAPP</a>
+                <a href="https://discord.gg/raindrop"
+                    style="color: var(--primary); text-decoration: none; font-size: 0.8rem; letter-spacing: 1px;">DISCORD</a>
+            </div>
+        </footer>
+    </main>
+
+    <script src="index.js"></script>
+    <script>
+        // Load live content from backend
+        fetch('get_public_content.php')
+            .then(res => res.json())
+            .then(data => {
+                if (data.hero_tag) document.getElementById('hero-tag').innerText = data.hero_tag;
+                if (data.hero_desc) document.getElementById('hero-desc').innerText = data.hero_desc;
+
+                if (data.about_mission_title) document.getElementById('about-mission-title').innerText = data.about_mission_title;
+                if (data.about_mission_desc) document.getElementById('about-mission-desc').innerText = data.about_mission_desc;
+                if (data.about_what_title) document.getElementById('about-what-title').innerText = data.about_what_title;
+                if (data.about_what_desc) document.getElementById('about-what-desc').innerText = data.about_what_desc;
+
+                if (data.event1_tag) document.getElementById('event1-tag').innerText = data.event1_tag;
+                if (data.event1_title) document.getElementById('event1_title').innerText = data.event1_title;
+                if (data.event1_desc) document.getElementById('event1-desc').innerText = data.event1_desc;
+
+                if (data.event2_tag) document.getElementById('event2-tag').innerText = data.event2_tag;
+                if (data.event2_title) document.getElementById('event2_title').innerText = data.event2_title;
+                if (data.event2_desc) document.getElementById('event2-desc').innerText = data.event2_desc;
+
+                if (data.event3_tag) document.getElementById('event3-tag').innerText = data.event3_tag;
+                if (data.event3_title) document.getElementById('event3_title').innerText = data.event3_title;
+                if (data.event3_desc) document.getElementById('event3-desc').innerText = data.event3_desc;
+
+                if (data.rules_group1_title) document.getElementById('rules-group1-title').innerText = data.rules_group1_title;
+                if (data.rules_group1_list) {
+                    const list = document.getElementById('rules-group1-list');
+                    list.innerHTML = data.rules_group1_list.split('\n').map(item => item.trim() ? `<li>${item.trim()}</li>` : '').join('');
+                }
+
+                if (data.rules_group2_title) document.getElementById('rules-group2-title').innerText = data.rules_group2_title;
+                if (data.rules_group2_list) {
+                    const list = document.getElementById('rules-group2-list');
+                    list.innerHTML = data.rules_group2_list.split('\n').map(item => item.trim() ? `<li>${item.trim()}</li>` : '').join('');
+                }
+            })
+            .catch(err => console.error("Error loading dynamic content:", err));
+    </script>
+</body>
+
+</html>

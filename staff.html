@@ -1,0 +1,575 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>RAINDROPS | Staff Portal</title>
+    <link rel="stylesheet" href="index.css">
+    <style>
+        .staff-login {
+            min-height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            z-index: 10;
+        }
+
+        .login-card {
+            width: 100%;
+            max-width: 400px;
+            padding: 3rem;
+            text-align: center;
+        }
+
+        .staff-dashboard {
+            display: none;
+            padding-top: 120px;
+            min-height: 100vh;
+        }
+
+        .grid-dashboard {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 2rem;
+            margin-top: 3rem;
+        }
+
+        .dashboard-item {
+            padding: 2rem;
+            text-align: center;
+            transition: all 0.3s ease;
+            text-decoration: none;
+            display: block;
+            cursor: pointer;
+        }
+
+        .dashboard-item:hover {
+            transform: translateY(-5px);
+            border-color: var(--primary);
+            box-shadow: 0 0 20px rgba(0, 191, 191, 0.2);
+        }
+
+        .dashboard-item span {
+            display: block;
+            color: var(--primary);
+            font-size: 0.7rem;
+            font-weight: 800;
+            letter-spacing: 2px;
+            margin-bottom: 0.5rem;
+        }
+
+        .login-input {
+            width: 100%;
+            background: rgba(255, 255, 255, 0.05);
+            border: 1px solid var(--glass-border);
+            border-radius: 8px;
+            padding: 1rem;
+            color: var(--text-main);
+            margin-bottom: 1.5rem;
+            text-align: center;
+            font-family: inherit;
+        }
+
+        .admin-section {
+            display: none;
+            margin-top: 2rem;
+            animation: fadeIn 0.4s ease;
+        }
+
+        .appeals-table-container {
+            overflow-x: auto;
+        }
+
+        .appeals-table {
+            width: 100%;
+            border-collapse: collapse;
+            font-size: 0.85rem;
+            text-align: left;
+        }
+
+        .appeals-table th {
+            color: var(--primary);
+            padding: 1rem;
+            border-bottom: 2px solid var(--glass-border);
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+
+        .appeals-table td {
+            padding: 1rem;
+            border-bottom: 1px solid var(--glass-border);
+            color: var(--text-dim);
+        }
+
+        .settings-form {
+            max-width: 600px;
+            margin: 0 auto;
+            padding: 2.5rem;
+        }
+
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+                transform: translateY(10px);
+            }
+
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+    </style>
+</head>
+
+<body class="scanlines">
+    <canvas id="rainCanvas"></canvas>
+
+    <!-- Login Screen -->
+    <div id="loginScreen" class="staff-login container">
+        <div class="glass login-card fade-in">
+            <img src="assets/just rain cloud.png" alt="Cloud" style="width: 60px; margin-bottom: 1.5rem;">
+            <h2 class="section-title" style="margin-bottom: 0.5rem;">STAFF ACCESS</h2>
+            <p style="color: var(--text-dim); font-size: 0.8rem; margin-bottom: 2rem;">AUTHORIZATION REQUIRED</p>
+            <input type="password" id="staffPass" class="login-input" placeholder="ENTER ACCESS CODE">
+            <button onclick="checkAuth()" class="cta-button" style="width: 100%;">LOGIN</button>
+            <p id="errorMsg" style="color: #ff4444; font-size: 0.75rem; margin-top: 1rem; display: none;">ACCESS DENIED:
+                INVALID CODE</p>
+        </div>
+    </div>
+
+    <!-- Dashboard Screen -->
+    <div id="staffContent" class="staff-dashboard container">
+        <nav id="navbar">
+            <a href="index.html" class="logo">
+                <img src="assets/raindrops no cloud.png" alt="RAINDROPS" style="height: 32px; display: block;">
+            </a>
+            <div class="nav-actions">
+                <span style="color: var(--primary); font-size: 0.75rem; font-weight: 800;">ADMIN_ACTIVE</span>
+                <a href="#" onclick="logout()" class="nav-link-small">Logout</a>
+            </div>
+        </nav>
+
+        <div id="dashboardView" class="fade-in">
+            <h2 class="section-title">COMMAND CENTER</h2>
+            <p style="text-align: center; color: var(--text-dim);">Raindrops Staff Oversight & Management</p>
+
+            <div id="mainDashboard" class="grid-dashboard">
+                <div onclick="viewAppeals()" class="glass dashboard-item">
+                    <span>ACTION required</span>
+                    <h3>REVIEW APPEALS</h3>
+                    <p style="font-size: 0.85rem; color: var(--text-dim); margin-top: 0.5rem;">Access the logged
+                        submissions to process tickets.</p>
+                </div>
+
+                <div onclick="viewSettings()" class="glass dashboard-item">
+                    <span>System config</span>
+                    <h3>SERVER SETTINGS</h3>
+                    <p style="font-size: 0.85rem; color: var(--text-dim); margin-top: 0.5rem;">Manage webhooks and
+                        community notifications.</p>
+                </div>
+
+                <div onclick="viewCMS()" class="glass dashboard-item">
+                    <span>Content editor</span>
+                    <h3>WEBSITE CMS</h3>
+                    <p style="font-size: 0.85rem; color: var(--text-dim); margin-top: 0.5rem;">Change hero text, about
+                        sections, and schedules.</p>
+                </div>
+
+                <a href="https://vrchat.com/home/group/grp_77f8d8b8-dcfb-4b61-b065-d6d4d2bbbaa3" target="_blank"
+                    class="glass dashboard-item">
+                    <span>VRChat api</span>
+                    <h3>GROUP ADMIN</h3>
+                    <p style="font-size: 0.85rem; color: var(--text-dim); margin-top: 0.5rem;">Manage members, roles,
+                        and instances on VRChat.</p>
+                </a>
+            </div>
+        </div>
+
+        <!-- Appeals Review Section -->
+        <div id="appealsSection" class="admin-section">
+            <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 2rem;">
+                <h3 style="color: var(--primary); letter-spacing: 2px;">ACTIVE TICKETS</h3>
+                <button onclick="hideSection()" class="nav-link-small"
+                    style="background: none; border: none; cursor: pointer; color: var(--primary);">← Back to
+                    Dash</button>
+            </div>
+            <div class="glass appeals-table-container"
+                style="padding: 1.5rem; border-radius: 12px; border: 1px solid var(--glass-border);">
+                <table class="appeals-table">
+                    <thead>
+                        <tr>
+                            <th>Ticket</th>
+                            <th>VRChat Profile</th>
+                            <th>Discord</th>
+                            <th>Reason</th>
+                            <th>Statement</th>
+                            <th>Date Received</th>
+                        </tr>
+                    </thead>
+                    <tbody id="appealsBody"></tbody>
+                </table>
+            </div>
+        </div>
+
+        <!-- CMS Section -->
+        <div id="cmsSection" class="admin-section">
+            <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 2rem;">
+                <h3 style="color: var(--primary); letter-spacing: 2px;">WEBSITE CONTENT MANAGER</h3>
+                <button onclick="hideSection()" class="nav-link-small"
+                    style="background: none; border: none; cursor: pointer; color: var(--primary);">← Back to
+                    Dash</button>
+            </div>
+
+            <div class="glass"
+                style="padding: 2.5rem; border-radius: 12px; border: 1px solid var(--glass-border); max-width: 800px; margin: 0 auto;">
+                <!-- Hero -->
+                <h4
+                    style="color: var(--primary); margin-bottom: 1.5rem; font-size: 0.9rem; border-bottom: 2px solid var(--primary); padding-bottom: 0.5rem; display: flex; align-items: center; gap: 0.5rem;">
+                    <svg style="width:16px;" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path d="M13 10V3L4 14h7v7l9-11h-7z" stroke-width="2" stroke-linecap="round"
+                            stroke-linejoin="round" />
+                    </svg>
+                    HERO SECTION (TOP OF PAGE)
+                </h4>
+                <div class="form-group" style="margin-bottom: 2rem;">
+                    <label
+                        style="display:block; font-size: 0.75rem; color: var(--primary); font-weight: 800; margin-bottom: 0.5rem;">HERO
+                        TAGLINE</label>
+                    <p id="ref-hero_tag"
+                        style="font-size: 0.7rem; color: var(--text-dim); margin-bottom: 0.5rem; padding-left: 0.5rem; border-left: 2px solid var(--glass-border);">
+                        Current: Loading...</p>
+                    <input type="text" id="cms-hero_tag" class="login-input"
+                        style="text-align: left; background: rgba(255,255,255,0.08);">
+                </div>
+                <div class="form-group" style="margin-bottom: 2rem;">
+                    <label
+                        style="display:block; font-size: 0.75rem; color: var(--primary); font-weight: 800; margin-bottom: 0.5rem;">HERO
+                        DESCRIPTION</label>
+                    <p id="ref-hero_desc"
+                        style="font-size: 0.7rem; color: var(--text-dim); margin-bottom: 0.5rem; padding-left: 0.5rem; border-left: 2px solid var(--glass-border);">
+                        Current: Loading...</p>
+                    <textarea id="cms-hero_desc" class="login-input"
+                        style="text-align: left; height: 100px; background: rgba(255,255,255,0.08);"></textarea>
+                </div>
+
+                <!-- About -->
+                <h4
+                    style="color: var(--primary); margin-top: 3rem; margin-bottom: 1.5rem; font-size: 0.9rem; border-bottom: 2px solid var(--primary); padding-bottom: 0.5rem; display: flex; align-items: center; gap: 0.5rem;">
+                    <svg style="width:16px;" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z" stroke-width="2"
+                            stroke-linecap="round" stroke-linejoin="round" />
+                    </svg>
+                    ABOUT SECTION
+                </h4>
+                <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 2rem; margin-bottom: 1rem;">
+                    <div class="form-group">
+                        <label
+                            style="display:block; font-size: 0.75rem; color: var(--primary); font-weight: 800; margin-bottom: 0.5rem;">MISSION
+                            TITLE</label>
+                        <p id="ref-about_mission_title"
+                            style="font-size: 0.65rem; color: var(--text-dim); margin-bottom: 0.5rem;">Current: ...</p>
+                        <input type="text" id="cms-about_mission_title" class="login-input"
+                            style="text-align: left; background: rgba(255,255,255,0.08);">
+
+                        <label
+                            style="display:block; font-size: 0.75rem; color: var(--primary); font-weight: 800; margin-top: 1rem; margin-bottom: 0.5rem;">MISSION
+                            TEXT</label>
+                        <p id="ref-about_mission_desc"
+                            style="font-size: 0.65rem; color: var(--text-dim); margin-bottom: 0.5rem;">Current: ...</p>
+                        <textarea id="cms-about_mission_desc" class="login-input"
+                            style="text-align: left; height: 120px; background: rgba(255,255,255,0.08);"></textarea>
+                    </div>
+                    <div class="form-group">
+                        <label
+                            style="display:block; font-size: 0.75rem; color: var(--primary); font-weight: 800; margin-bottom: 0.5rem;">WHAT
+                            WE DO TITLE</label>
+                        <p id="ref-about_what_title"
+                            style="font-size: 0.65rem; color: var(--text-dim); margin-bottom: 0.5rem;">Current: ...</p>
+                        <input type="text" id="cms-about_what_title" class="login-input"
+                            style="text-align: left; background: rgba(255,255,255,0.08);">
+
+                        <label
+                            style="display:block; font-size: 0.75rem; color: var(--primary); font-weight: 800; margin-top: 1rem; margin-bottom: 0.5rem;">WHAT
+                            WE DO TEXT</label>
+                        <p id="ref-about_what_desc"
+                            style="font-size: 0.65rem; color: var(--text-dim); margin-bottom: 0.5rem;">Current: ...</p>
+                        <textarea id="cms-about_what_desc" class="login-input"
+                            style="text-align: left; height: 120px; background: rgba(255,255,255,0.08);"></textarea>
+                    </div>
+                </div>
+
+                <!-- Events -->
+                <h4
+                    style="color: var(--primary); margin-top: 3rem; margin-bottom: 1.5rem; font-size: 0.9rem; border-bottom: 2px solid var(--primary); padding-bottom: 0.5rem; display: flex; align-items: center; gap: 0.5rem;">
+                    <svg style="width:16px;" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z"
+                            stroke-width="2" stroke-linecap="round" stroke-linejoin="round" />
+                    </svg>
+                    WEEKLY SCHEDULE
+                </h4>
+                <div style="display: grid; grid-template-columns: repeat(3, 1fr); gap: 1.5rem; margin-bottom: 1rem;">
+                    <div class="glass" style="padding: 1rem; background: rgba(255,255,255,0.03);">
+                        <strong
+                            style="font-size: 0.7rem; color: var(--primary); display: block; margin-bottom: 1rem;">EVENT
+                            1</strong>
+                        <input type="text" id="cms-event1_tag" class="login-input" placeholder="TIME"
+                            style="font-size: 0.75rem; margin-bottom: 0.5rem;">
+                        <input type="text" id="cms-event1_title" class="login-input" placeholder="TITLE"
+                            style="font-size: 0.75rem; margin-bottom: 0.5rem;">
+                        <textarea id="cms-event1_desc" class="login-input" placeholder="DESC"
+                            style="height: 80px; font-size: 0.75rem;"></textarea>
+                    </div>
+                    <div class="glass" style="padding: 1rem; background: rgba(255,255,255,0.03);">
+                        <strong
+                            style="font-size: 0.7rem; color: var(--primary); display: block; margin-bottom: 1rem;">EVENT
+                            2</strong>
+                        <input type="text" id="cms-event2_tag" class="login-input" placeholder="TIME"
+                            style="font-size: 0.75rem; margin-bottom: 0.5rem;">
+                        <input type="text" id="cms-event2_title" class="login-input" placeholder="TITLE"
+                            style="font-size: 0.75rem; margin-bottom: 0.5rem;">
+                        <textarea id="cms-event2_desc" class="login-input" placeholder="DESC"
+                            style="height: 80px; font-size: 0.75rem;"></textarea>
+                    </div>
+                    <div class="glass" style="padding: 1rem; background: rgba(255,255,255,0.03);">
+                        <strong
+                            style="font-size: 0.7rem; color: var(--primary); display: block; margin-bottom: 1rem;">EVENT
+                            3</strong>
+                        <input type="text" id="cms-event3_tag" class="login-input" placeholder="TIME"
+                            style="font-size: 0.75rem; margin-bottom: 0.5rem;">
+                        <input type="text" id="cms-event3_title" class="login-input" placeholder="TITLE"
+                            style="font-size: 0.75rem; margin-bottom: 0.5rem;">
+                        <textarea id="cms-event3_desc" class="login-input" placeholder="DESC"
+                            style="height: 80px; font-size: 0.75rem;"></textarea>
+                    </div>
+                </div>
+
+                <!-- Rules -->
+                <h4
+                    style="color: var(--primary); margin-top: 3rem; margin-bottom: 1.5rem; font-size: 0.9rem; border-bottom: 2px solid var(--primary); padding-bottom: 0.5rem; display: flex; align-items: center; gap: 0.5rem;">
+                    <svg style="width:16px;" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z" stroke-width="2" stroke-linecap="round"
+                            stroke-linejoin="round" />
+                    </svg>
+                    RAIN RULES
+                </h4>
+                <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 2rem;">
+                    <div>
+                        <label
+                            style="display:block; font-size: 0.75rem; color: var(--primary); font-weight: 800; margin-bottom: 1rem;">RULE
+                            CATEGORY 1</label>
+                        <input type="text" id="cms-rules_group1_title" class="login-input"
+                            style="background: rgba(255,255,255,0.08);">
+                        <textarea id="cms-rules_group1_list" class="login-input"
+                            style="height: 150px; background: rgba(255,255,255,0.08);"
+                            placeholder="One rule per line..."></textarea>
+                    </div>
+                    <div>
+                        <label
+                            style="display:block; font-size: 0.75rem; color: var(--primary); font-weight: 800; margin-bottom: 1rem;">RULE
+                            CATEGORY 2</label>
+                        <input type="text" id="cms-rules_group2_title" class="login-input"
+                            style="background: rgba(255,255,255,0.08);">
+                        <textarea id="cms-rules_group2_list" class="login-input"
+                            style="height: 150px; background: rgba(255,255,255,0.08);"
+                            placeholder="One rule per line..."></textarea>
+                    </div>
+                </div>
+
+                <button onclick="saveCMS()" id="cmsSaveBtn" class="cta-button"
+                    style="width: 100%; margin-top: 2rem;">PUBLISH UPDATES</button>
+            </div>
+        </div>
+
+        <!-- Settings Section -->
+        <div id="settingsSection" class="admin-section">
+            <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 2rem;">
+                <h3 style="color: var(--primary); letter-spacing: 2px;">NOTIFICATIONS CONFIG</h3>
+                <button onclick="hideSection()" class="nav-link-small"
+                    style="background: none; border: none; cursor: pointer; color: var(--primary);">← Back to
+                    Dash</button>
+            </div>
+            <div class="glass settings-form" style="border-radius: 12px; border: 1px solid var(--glass-border);">
+                <div style="margin-bottom: 2rem;">
+                    <label
+                        style="display: block; color: var(--primary); font-size: 0.75rem; font-weight: 800; margin-bottom: 1rem; letter-spacing: 1px;">DISCORD
+                        LOG WEBHOOK URL</label>
+                    <input type="text" id="webhookInput" class="login-input" style="text-align: left;"
+                        placeholder="https://discord.com/api/webhooks/...">
+                    <p style="color: var(--text-dim); font-size: 0.8rem; line-height: 1.4;">Notifications for ban
+                        appeals and group activity will be sent to this webhook channel.</p>
+                </div>
+                <button onclick="saveSettings()" id="saveBtn" class="cta-button" style="width: 100%;">SAVE
+                    SETTINGS</button>
+            </div>
+        </div>
+    </div>
+
+    <script src="index.js"></script>
+    <script>
+        const STAFF_CODE = "RAINDROPS_STAFF";
+
+        function checkAuth() {
+            if (document.getElementById('staffPass').value === STAFF_CODE) {
+                sessionStorage.setItem('staff_auth', 'true');
+                showDashboard();
+            } else {
+                document.getElementById('errorMsg').style.display = 'block';
+                setTimeout(() => document.getElementById('errorMsg').style.display = 'none', 3000);
+            }
+        }
+
+        function showDashboard() {
+            document.getElementById('loginScreen').style.display = 'none';
+            document.getElementById('staffContent').style.display = 'block';
+        }
+
+        function hideSection() {
+            document.querySelectorAll('.admin-section').forEach(s => s.style.display = 'none');
+            document.getElementById('dashboardView').style.display = 'block';
+        }
+
+        function viewAppeals() {
+            document.getElementById('dashboardView').style.display = 'none';
+            document.getElementById('appealsSection').style.display = 'block';
+
+            fetch(`get_appeals.php?auth=${STAFF_CODE}`)
+                .then(res => res.json())
+                .then(data => {
+                    const body = document.getElementById('appealsBody');
+                    body.innerHTML = '';
+                    if (!data || data.length === 0) {
+                        body.innerHTML = '<tr><td colspan="6" style="text-align:center; padding: 3rem; color: var(--text-dim);">No logs found.</td></tr>';
+                        return;
+                    }
+                    data.reverse().forEach(item => {
+                        const tr = document.createElement('tr');
+                        tr.innerHTML = `
+                            <td style="color: var(--primary); font-weight: 800;">#${item.ticket}</td>
+                            <td><a href="${item.vrc}" target="_blank" style="color: var(--secondary); text-decoration: none; border-bottom: 1px dashed var(--secondary);">Profile</a></td>
+                            <td style="color: var(--text-main);">${item.discord}</td>
+                            <td><span style="background: rgba(255,68,68,0.1); color: #ff4444; padding: 2px 8px; border-radius: 4px; font-size: 0.75rem;">${item.reason}</span></td>
+                            <td style="max-width: 300px; white-space: normal; line-height: 1.4;">${item.message}</td>
+                            <td style="font-size: 0.75rem; opacity: 0.7;">${new Date(item.timestamp).toLocaleString()}</td>
+                        `;
+                        body.appendChild(tr);
+                    });
+                });
+        }
+
+        function viewSettings() {
+            document.getElementById('dashboardView').style.display = 'none';
+            document.getElementById('settingsSection').style.display = 'block';
+
+            fetch(`get_settings.php?auth=${STAFF_CODE}`)
+                .then(res => res.json())
+                .then(data => {
+                    document.getElementById('webhookInput').value = data.discord_webhook || '';
+                });
+        }
+
+        function viewCMS() {
+            document.getElementById('dashboardView').style.display = 'none';
+            document.getElementById('cmsSection').style.display = 'block';
+
+            fetch(`get_settings.php?auth=${STAFF_CODE}`)
+                .then(res => res.json())
+                .then(data => {
+                    const fields = [
+                        'hero_tag', 'hero_desc',
+                        'about_mission_title', 'about_mission_desc',
+                        'about_what_title', 'about_what_desc',
+                        'event1_tag', 'event1_title', 'event1_desc',
+                        'event2_tag', 'event2_title', 'event2_desc',
+                        'event3_tag', 'event3_title', 'event3_desc',
+                        'rules_group1_title', 'rules_group1_list',
+                        'rules_group2_title', 'rules_group2_list'
+                    ];
+                    fields.forEach(f => {
+                        const input = document.getElementById(`cms-${f}`);
+                        const ref = document.getElementById(`ref-${f}`);
+                        if (input) input.value = data[f] || '';
+                        if (ref) {
+                            const val = data[f] || '[Empty]';
+                            ref.innerText = `Current: ${val.length > 60 ? val.substring(0, 57) + '...' : val}`;
+                        }
+                    });
+                });
+        }
+
+        function saveCMS() {
+            const btn = document.getElementById('cmsSaveBtn');
+            btn.innerText = 'PUBLISHING...';
+            btn.disabled = true;
+
+            fetch(`get_settings.php?auth=${STAFF_CODE}`)
+                .then(res => res.json())
+                .then(existingSettings => {
+                    const fields = [
+                        'hero_tag', 'hero_desc',
+                        'about_mission_title', 'about_mission_desc',
+                        'about_what_title', 'about_what_desc',
+                        'event1_tag', 'event1_title', 'event1_desc',
+                        'event2_tag', 'event2_title', 'event2_desc',
+                        'event3_tag', 'event3_title', 'event3_desc',
+                        'rules_group1_title', 'rules_group1_list',
+                        'rules_group2_title', 'rules_group2_list'
+                    ];
+
+                    fields.forEach(f => {
+                        const el = document.getElementById(`cms-${f}`);
+                        if (el) existingSettings[f] = el.value;
+                    });
+
+                    fetch('update_settings.php', {
+                        method: 'POST',
+                        headers: { 'Content-Type': 'application/json' },
+                        body: JSON.stringify({ auth: STAFF_CODE, settings: existingSettings })
+                    })
+                        .then(res => res.json())
+                        .then(data => {
+                            if (data.status === 'success') {
+                                btn.innerText = 'PUBLISHED SUCCESSFULLY!';
+                                setTimeout(() => { btn.innerText = 'PUBLISH UPDATES'; btn.disabled = false; }, 2000);
+                            } else {
+                                alert('Error saving CMS content.');
+                                btn.disabled = false;
+                            }
+                        });
+                });
+        }
+
+        function saveSettings() {
+            const btn = document.getElementById('saveBtn');
+            btn.innerText = 'SAVING...';
+            btn.disabled = true;
+
+            fetch(`get_settings.php?auth=${STAFF_CODE}`)
+                .then(res => res.json())
+                .then(existingSettings => {
+                    existingSettings.discord_webhook = document.getElementById('webhookInput').value;
+
+                    fetch('update_settings.php', {
+                        method: 'POST',
+                        headers: { 'Content-Type': 'application/json' },
+                        body: JSON.stringify({ auth: STAFF_CODE, settings: existingSettings })
+                    })
+                        .then(res => res.json())
+                        .then(data => {
+                            if (data.status === 'success') {
+                                btn.innerText = 'SETTINGS SAVED!';
+                                setTimeout(() => { btn.innerText = 'SAVE SETTINGS'; btn.disabled = false; }, 2000);
+                            } else {
+                                alert('Error saving settings.');
+                                btn.disabled = false;
+                            }
+                        });
+                });
+        }
+
+        function logout() { sessionStorage.removeItem('staff_auth'); location.reload(); }
+        if (sessionStorage.getItem('staff_auth') === 'true') showDashboard();
+    </script>
+</body>
+
+</html>
