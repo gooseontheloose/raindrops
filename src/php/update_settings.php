@@ -1,7 +1,7 @@
 <?php
 // update_settings.php - Updates community settings
 
-$SETTINGS_FILE = 'data/settings.json';
+$SETTINGS_FILE = '../../data/settings.json';
 $STAFF_CODE = 'RAINDROPS_STAFF';
 
 header('Content-Type: application/json');

@@ -1,6 +1,6 @@
 <?php
 // get_public_content.php - Returns non-sensitive site content
-$SETTINGS_FILE = 'data/settings.json';
+$SETTINGS_FILE = '../../data/settings.json';
 $DEFAULT_FILE = 'default_settings.json';
 header('Content-Type: application/json');
 

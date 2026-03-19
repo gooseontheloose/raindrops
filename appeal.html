@@ -5,7 +5,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>RAINDROPS | Ban Appeal</title>
-    <link rel="stylesheet" href="index.css">
+    <link rel="stylesheet" href="src/css/index.css">
     <link rel="icon" href="assets/logo_icon.png" type="image/png">
     <style>
         .appeal-container {
@@ -151,7 +151,7 @@
         </div>
     </div>
 
-    <script src="index.js"></script>
+    <script src="src/js/index.js"></script>
     <script>
         document.getElementById('appealForm').addEventListener('submit', function (e) {
             e.preventDefault();
@@ -174,7 +174,7 @@
             };
 
             // Send to PHP Backend
-            fetch('submit_appeal.php', {
+            fetch('src/php/submit_appeal.php', {
                 method: 'POST',
                 headers: { 'Content-Type': 'application/json' },
                 body: JSON.stringify(formData)

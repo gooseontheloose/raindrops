@@ -2,7 +2,7 @@
 // get_appeals.php - Retrieves logged ban appeals for the staff dashboard
 
 // --- CONFIGURATION ---
-$LOG_FILE = 'data/appeals_log.json';
+$LOG_FILE = '../../data/appeals_log.json';
 $STAFF_CODE = 'RAINDROPS_STAFF'; // Must match staff.html
 
 header('Content-Type: application/json');

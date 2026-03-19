@@ -1,8 +1,8 @@
 <?php
 // submit_appeal.php - Handles ban appeal submissions for Raindrops
 
-$LOG_FILE = 'data/appeals_log.json';
-$SETTINGS_FILE = 'data/settings.json';
+$LOG_FILE = '../../data/appeals_log.json';
+$SETTINGS_FILE = '../../data/settings.json';
 
 header('Content-Type: application/json');
 

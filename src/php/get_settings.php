@@ -1,7 +1,7 @@
 <?php
 // get_settings.php - Retrieves community settings for authorized staff
 
-$SETTINGS_FILE = 'data/settings.json';
+$SETTINGS_FILE = '../../data/settings.json';
 $DEFAULT_FILE = 'default_settings.json';
 $STAFF_CODE = 'RAINDROPS_STAFF';
 

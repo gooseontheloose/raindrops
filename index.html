@@ -7,7 +7,7 @@
     <title>RAINDROPS | The Ultimate VRChat Gaming Community</title>
     <meta name="description"
         content="A game & chill community for all. Join our VRChat club, karaoke nights, and exclusive events. Experience the best gaming community in VR.">
-    <link rel="stylesheet" href="index.css?v=1.5">
+    <link rel="stylesheet" href="src/css/index.css?v=1.5">
     <link rel="icon" href="assets/logo_icon.png" type="image/png">
     <script src="https://player.twitch.tv/js/embed/v1.js"></script>
 </head>
@@ -307,7 +307,7 @@
         </footer>
     </main>
 
-    <script src="index.js?v=1.5"></script>
+    <script src="src/js/index.js?v=1.5"></script>
     <script>
         // Initialize Twitch Player
         var options = {
@@ -324,7 +324,7 @@
         });
 
         // Load live content from backend
-        fetch('get_public_content.php')
+        fetch('src/php/get_public_content.php')
             .then(res => res.json())
             .then(data => {
                 if (data.hero_tag) document.getElementById('hero-tag').innerText = data.hero_tag;
