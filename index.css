@@ -185,6 +185,17 @@ nav.scrolled {
     color: var(--text-main);
 }
 
+.live-player-container {
+    width: 100%;
+    max-width: 1050px;
+    overflow: hidden;
+    aspect-ratio: 16/9;
+    border: 1px solid var(--glass-border);
+    box-shadow: 0 0 50px rgba(0, 242, 255, 0.15);
+    position: relative;
+    margin: 0 auto;
+}
+
 /* Hamburger Menu */
 .hamburger {
     display: none;
@@ -425,6 +436,13 @@ section {
     margin: 0 auto;
 }
 
+.portal-grid {
+    display: flex;
+    justify-content: center;
+    flex-wrap: wrap;
+    gap: 1.5rem;
+}
+
 .portal-item {
     display: flex;
     align-items: center;
@@ -434,8 +452,11 @@ section {
     color: inherit;
     transition: all 0.3s ease;
     flex: 1;
-    min-width: 300px;
-    max-width: 480px;
+    min-width: 250px;
+    max-width: 350px;
+    border: 1px solid var(--glass-border);
+    background: rgba(255, 255, 255, 0.05);
+    border-radius: 12px;
 }
 
 .portal-item:hover {
@@ -597,26 +618,27 @@ section {
 
 /* Force mobile styles if is-mobile class is present (for iframes) */
 html.is-mobile { font-size: 18px !important; }
-body.is-mobile { overflow-x: hidden; width: 100%; }
+body.is-mobile { overflow-x: hidden !important; width: 100% !important; margin: 0 !important; }
 body.is-mobile .nav-links, body.is-mobile .nav-actions { display: none !important; }
 body.is-mobile .hamburger { display: flex !important; }
-body.is-mobile .container { max-width: 100% !important; width: 100% !important; padding: 0 1rem; box-sizing: border-box; }
-body.is-mobile section { padding: 3rem 0; min-height: auto; align-items: center; width: 100% !important; box-sizing: border-box; }
+body.is-mobile .container { max-width: 100% !important; width: 100% !important; padding: 0 1rem !important; box-sizing: border-box !important; }
+body.is-mobile section { padding: 3rem 0 !important; min-height: auto; align-items: center; width: 100% !important; box-sizing: border-box !important; }
 body.is-mobile .hero-content img { max-width: 85% !important; height: auto !important; margin-bottom: 1rem; }
 body.is-mobile .hero-content p { font-size: 1.1rem !important; line-height: 1.6; padding: 0 1rem; }
 body.is-mobile .section-title { font-size: 1.8rem !important; margin-bottom: 1.5rem; text-align: center; }
-body.is-mobile .stats-grid { display: flex !important; flex-direction: column !important; gap: 0.75rem; width: 100%; }
-body.is-mobile .stat-item { padding: 1.25rem !important; width: 100%; box-sizing: border-box; }
+body.is-mobile .stats-grid { display: flex !important; flex-direction: column !important; gap: 0.75rem; width: 100% !important; }
+body.is-mobile .stat-item { padding: 1.25rem !important; width: 100% !important; box-sizing: border-box; }
 body.is-mobile .stat-value { font-size: 2.2rem !important; }
 body.is-mobile .stat-label { font-size: 0.8rem !important; letter-spacing: 1px; }
-body.is-mobile .events-grid { display: flex !important; flex-direction: column !important; gap: 1rem !important; width: 100%; }
-body.is-mobile .event-card { padding: 1.5rem !important; width: 100%; box-sizing: border-box; transform: none !important; }
+body.is-mobile .live-player-container { max-width: 100% !important; width: 100% !important; aspect-ratio: 16/9 !important; height: auto !important; margin: 0 !important; }
+body.is-mobile .events-grid { display: flex !important; flex-direction: column !important; gap: 1rem !important; width: 100% !important; }
+body.is-mobile .event-card { padding: 1.5rem !important; width: 100% !important; box-sizing: border-box; transform: none !important; }
 body.is-mobile .event-card h3 { font-size: 1.4rem !important; margin: 0.5rem 0 !important; }
 body.is-mobile .event-tag { font-size: 0.9rem !important; }
-body.is-mobile .portal-container { flex-direction: column !important; }
-body.is-mobile .portal-item { width: 100% !important; box-sizing: border-box; padding: 1.25rem !important; }
+body.is-mobile .portal-grid { flex-direction: column !important; width: 100% !important; gap: 1rem !important; }
+body.is-mobile .portal-item { width: 100% !important; box-sizing: border-box !important; padding: 1.25rem !important; min-width: 0 !important; max-width: 100% !important; }
 body.is-mobile .cta-button { font-size: 1rem !important; padding: 0.8rem 1.5rem !important; }
-body.is-mobile footer div { flex-direction: column; text-align: center; gap: 1.5rem !important; }
+body.is-mobile footer div { flex-direction: column !important; text-align: center; gap: 1.5rem !important; }
 
 /* Animations */
 @keyframes fadeIn {
