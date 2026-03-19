@@ -492,13 +492,17 @@ section {
 }
 
 /* Responsive */
-@media (max-width: 1024px) {
+@media (max-width: 1024px), (pointer: coarse) {
+    body {
+        overflow-x: hidden;
+    }
+
     .nav-links, .nav-actions {
-        display: none;
+        display: none !important;
     }
 
     .hamburger {
-        display: flex;
+        display: flex !important;
     }
 
     nav {
@@ -511,6 +515,8 @@ section {
 
     .container {
         padding: 0 1.5rem;
+        max-width: 100% !important;
+        width: 100% !important;
     }
 
     .section-title {
@@ -526,6 +532,7 @@ section {
 
     .hero-content img {
         max-width: 100% !important;
+        height: auto;
     }
 
     .hero-content p {
@@ -537,11 +544,14 @@ section {
     .stats-grid {
         gap: 1rem;
         margin-top: 2rem;
+        flex-direction: column;
+        align-items: center;
     }
 
     .stat-item {
         padding: 1.5rem;
         min-width: 100%;
+        width: 100%;
     }
 
     .stat-value {
@@ -552,6 +562,7 @@ section {
     section {
         padding: 4rem 0;
         min-height: auto;
+        width: 100% !important;
     }
 
     /* Twitch Player */
@@ -575,6 +586,19 @@ section {
         gap: 1rem !important;
     }
 }
+
+/* Force mobile styles if is-mobile class is present (for iframes) */
+body.is-mobile .nav-links, body.is-mobile .nav-actions { display: none !important; }
+body.is-mobile .hamburger { display: flex !important; }
+body.is-mobile .container { max-width: 100% !important; width: 100% !important; padding: 0 1.5rem; }
+body.is-mobile section { padding: 4rem 0; min-height: auto; align-items: center; }
+body.is-mobile .stats-grid { flex-direction: column; gap: 1rem; }
+body.is-mobile .stat-item { min-width: 100%; }
+body.is-mobile .rules-grid { grid-template-columns: 1fr; }
+body.is-mobile footer div { flex-direction: column; }
+body.is-mobile #hero { padding: 6rem 0 4rem; min-height: auto; }
+body.is-mobile .hero-content img { max-width: 100% !important; }
+body.is-mobile .section-title { font-size: 1.75rem; }
 
 /* Animations */
 @keyframes fadeIn {
