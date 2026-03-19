@@ -377,6 +377,14 @@ section {
     gap: 2rem;
 }
 
+.events-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+    gap: 1.5rem;
+    max-width: 1000px;
+    margin: 0 auto;
+}
+
 .event-card {
     display: flex;
     flex-direction: column;
@@ -588,17 +596,25 @@ section {
 }
 
 /* Force mobile styles if is-mobile class is present (for iframes) */
+body.is-mobile { font-size: 1.3rem !important; }
 body.is-mobile .nav-links, body.is-mobile .nav-actions { display: none !important; }
 body.is-mobile .hamburger { display: flex !important; }
-body.is-mobile .container { max-width: 100% !important; width: 100% !important; padding: 0 1.5rem; }
-body.is-mobile section { padding: 4rem 0; min-height: auto; align-items: center; }
-body.is-mobile .stats-grid { flex-direction: column; gap: 1rem; }
-body.is-mobile .stat-item { min-width: 100%; }
-body.is-mobile .rules-grid { grid-template-columns: 1fr; }
-body.is-mobile footer div { flex-direction: column; }
+body.is-mobile .container { max-width: 100% !important; width: 100% !important; padding: 0 1rem; }
+body.is-mobile section { padding: 4rem 0; min-height: auto; align-items: center; width: 100% !important; box-sizing: border-box; }
+body.is-mobile .stats-grid { flex-direction: column; gap: 1rem; width: 100%; box-sizing: border-box; }
+body.is-mobile .stat-item { min-width: 100%; box-sizing: border-box; }
+body.is-mobile .rules-grid { grid-template-columns: 1fr !important; width: 100%; box-sizing: border-box; }
+body.is-mobile .events-grid { grid-template-columns: 1fr !important; width: 100%; box-sizing: border-box; gap: 1.5rem; }
+body.is-mobile .event-card { padding: 2.5rem 1.5rem !important; width: 100%; box-sizing: border-box; transform: none !important; }
+body.is-mobile footer div { flex-direction: column; text-align: center; }
 body.is-mobile #hero { padding: 6rem 0 4rem; min-height: auto; }
 body.is-mobile .hero-content img { max-width: 100% !important; }
-body.is-mobile .section-title { font-size: 1.75rem; }
+body.is-mobile .hero-content p { font-size: 1.2rem !important; line-height: 1.6; }
+body.is-mobile .section-title { font-size: 2.2rem !important; margin-bottom: 2rem; }
+body.is-mobile .portal-item { flex-direction: column; text-align: center; min-width: 100%; }
+body.is-mobile .portal-text p { font-size: 1rem !important; }
+body.is-mobile .cta-button { font-size: 1.1rem !important; padding: 1rem 2rem !important; }
+body.is-mobile .event-tag { font-size: 1rem !important; }
 
 /* Animations */
 @keyframes fadeIn {
