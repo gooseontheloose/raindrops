@@ -122,5 +122,32 @@ document.addEventListener('mousemove', (e) => {
 
 window.addEventListener("resize", resize);
 
+// Mobile Menu Toggle
+const hamburger = document.getElementById('hamburger');
+const menuClose = document.getElementById('menu-close');
+const mobileMenu = document.getElementById('mobile-menu');
+const mobileLinks = document.querySelectorAll('.mobile-nav-links a');
+
+if (hamburger && mobileMenu) {
+    hamburger.addEventListener('click', () => {
+        mobileMenu.classList.add('active');
+        document.body.style.overflow = 'hidden'; 
+    });
+}
+
+if (menuClose && mobileMenu) {
+    menuClose.addEventListener('click', () => {
+        mobileMenu.classList.remove('active');
+        document.body.style.overflow = 'auto';
+    });
+}
+
+mobileLinks.forEach(link => {
+    link.addEventListener('click', () => {
+        mobileMenu.classList.remove('active');
+        document.body.style.overflow = 'auto';
+    });
+});
+
 setup();
 animate();
