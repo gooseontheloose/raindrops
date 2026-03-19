@@ -96,9 +96,13 @@ function animate() {
 }
 
 // Interactivity effects
-// Force mobile detection even for masked iframes
-const isMobile = /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent);
-if (isMobile) {
+// Ultra-Aggressive mobile detection for masked iframes
+const isMobileDevice = /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent) 
+                    || (navigator.maxTouchPoints > 0) 
+                    || (window.innerWidth < 1200);
+
+if (isMobileDevice) {
+    document.documentElement.classList.add('is-mobile');
     document.body.classList.add('is-mobile');
 }
 

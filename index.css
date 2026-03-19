@@ -616,29 +616,42 @@ section {
     }
 }
 
-/* Force mobile styles if is-mobile class is present (for iframes) */
-html.is-mobile { font-size: 18px !important; }
-body.is-mobile { overflow-x: hidden !important; width: 100% !important; margin: 0 !important; }
+/* NUCLEAR OPTION: Viewport-Width Scaling for Masked Iframes */
+html.is-mobile { font-size: 4.5vw !important; }
+body.is-mobile { 
+    overflow-x: hidden !important; 
+    width: 100vw !important; 
+    margin: 0 !important; 
+    position: relative;
+    font-size: 4.5vw !important;
+}
 body.is-mobile .nav-links, body.is-mobile .nav-actions { display: none !important; }
-body.is-mobile .hamburger { display: flex !important; }
-body.is-mobile .container { max-width: 100% !important; width: 100% !important; padding: 0 1rem !important; box-sizing: border-box !important; }
-body.is-mobile section { padding: 3rem 0 !important; min-height: auto; align-items: center; width: 100% !important; box-sizing: border-box !important; }
-body.is-mobile .hero-content img { max-width: 85% !important; height: auto !important; margin-bottom: 1rem; }
-body.is-mobile .hero-content p { font-size: 1.1rem !important; line-height: 1.6; padding: 0 1rem; }
-body.is-mobile .section-title { font-size: 1.8rem !important; margin-bottom: 1.5rem; text-align: center; }
-body.is-mobile .stats-grid { display: flex !important; flex-direction: column !important; gap: 0.75rem; width: 100% !important; }
-body.is-mobile .stat-item { padding: 1.25rem !important; width: 100% !important; box-sizing: border-box; }
-body.is-mobile .stat-value { font-size: 2.2rem !important; }
-body.is-mobile .stat-label { font-size: 0.8rem !important; letter-spacing: 1px; }
-body.is-mobile .live-player-container { max-width: 100% !important; width: 100% !important; aspect-ratio: 16/9 !important; height: auto !important; margin: 0 !important; }
-body.is-mobile .events-grid { display: flex !important; flex-direction: column !important; gap: 1rem !important; width: 100% !important; }
-body.is-mobile .event-card { padding: 1.5rem !important; width: 100% !important; box-sizing: border-box; transform: none !important; }
-body.is-mobile .event-card h3 { font-size: 1.4rem !important; margin: 0.5rem 0 !important; }
-body.is-mobile .event-tag { font-size: 0.9rem !important; }
-body.is-mobile .portal-grid { flex-direction: column !important; width: 100% !important; gap: 1rem !important; }
-body.is-mobile .portal-item { width: 100% !important; box-sizing: border-box !important; padding: 1.25rem !important; min-width: 0 !important; max-width: 100% !important; }
-body.is-mobile .cta-button { font-size: 1rem !important; padding: 0.8rem 1.5rem !important; }
-body.is-mobile footer div { flex-direction: column !important; text-align: center; gap: 1.5rem !important; }
+body.is-mobile .hamburger { display: flex !important; transform: scale(1.5); top: 5vw; right: 5vw; }
+body.is-mobile .container { max-width: 100vw !important; width: 100vw !important; padding: 0 5vw !important; box-sizing: border-box !important; }
+body.is-mobile section { padding: 12vw 0 !important; min-height: auto; width: 100vw !important; box-sizing: border-box !important; }
+body.is-mobile .hero-content img { max-width: 80vw !important; height: auto !important; margin-bottom: 5vw; }
+body.is-mobile .hero-content p { font-size: 5vw !important; line-height: 1.5; padding: 0 5vw; }
+body.is-mobile .section-title { font-size: 10vw !important; margin-bottom: 8vw; text-align: center; }
+body.is-mobile .stats-grid { display: flex !important; flex-direction: column !important; gap: 4vw; width: 100vw !important; padding: 0 5vw; box-sizing: border-box; }
+body.is-mobile .stat-item { padding: 8vw 5vw !important; width: 100% !important; box-sizing: border-box; }
+body.is-mobile .stat-value { font-size: 12vw !important; }
+body.is-mobile .stat-label { font-size: 4vw !important; letter-spacing: 0.5vw; }
+body.is-mobile .live-player-container { max-width: 90vw !important; width: 90vw !important; aspect-ratio: 16/9 !important; height: auto !important; margin: 0 auto !important; }
+body.is-mobile .events-grid { display: flex !important; flex-direction: column !important; gap: 5vw !important; width: 100vw !important; padding: 0 5vw; box-sizing: border-box; }
+body.is-mobile .event-card { padding: 8vw 5vw !important; width: 100% !important; box-sizing: border-box; transform: none !important; }
+body.is-mobile .event-card h3 { font-size: 7vw !important; margin: 3vw 0 !important; }
+body.is-mobile .event-tag { font-size: 3.5vw !important; }
+body.is-mobile .event-card p { font-size: 4vw !important; }
+body.is-mobile .portal-grid { flex-direction: column !important; width: 100vw !important; gap: 4vw !important; padding: 0 5vw; box-sizing: border-box; }
+body.is-mobile .portal-item { width: 100% !important; box-sizing: border-box !important; padding: 6vw !important; min-width: 0 !important; max-width: 100% !important; gap: 5vw !important; }
+body.is-mobile .portal-icon { width: 12vw !important; height: 12vw !important; min-width: 12vw !important; }
+body.is-mobile .portal-item h3 { font-size: 5vw !important; }
+body.is-mobile .portal-item p { font-size: 3.5vw !important; }
+body.is-mobile .cta-button { font-size: 5vw !important; padding: 4vw 8vw !important; width: 80vw !important; margin: 0 auto; display: block; }
+body.is-mobile footer { padding: 15vw 0 !important; }
+body.is-mobile footer div { flex-direction: column !important; text-align: center; gap: 8vw !important; }
+body.is-mobile .footer-links { flex-direction: column !important; gap: 4vw !important; }
+body.is-mobile .footer-logo img { height: 12vw !important; }
 
 /* Animations */
 @keyframes fadeIn {
